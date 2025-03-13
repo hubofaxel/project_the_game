@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6j8vx2x7y0qk"]
+
+[ext_resource type="Script" path="res://scripts/levels/level_base.gd" id="1_rjnmv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8g7t"]
+size = Vector2(1280, 40)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_rjnmv")
+level_name = "Level 1"
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(640, 300)
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(640, 700)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_e8g7t")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_left = -640.0
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = 20.0
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(1200, 650)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_e8g7t")
+scale = Vector2(0.1, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Exit"]
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = 0.0
+color = Color(0, 0.8, 0, 1)
