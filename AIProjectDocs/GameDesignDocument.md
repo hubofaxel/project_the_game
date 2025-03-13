@@ -14,9 +14,17 @@
 - WASD keys for movement
 - Space bar for jumping
 - Physics-based character controller
+- Movement parameters:
+  - Movement speed: 300.0
+  - Jump velocity: -530.0 (adjusted from -600.0 for better gameplay balance)
+  - Acceleration: 0.25
+  - Ground friction: 0.1
+  - Air friction: 0.05
 
 ### Game Elements
 - Platforming challenges
+  - Platforms at various heights for the player to jump between
+  - Vertical level progression through strategic platform placement
 - Physics interactions
 
 ## Technical Specifications

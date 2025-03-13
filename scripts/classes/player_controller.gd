@@ -9,7 +9,7 @@ signal player_died
 
 # Constants
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -530.0
 const MAX_HEALTH = 100
 
 # Exported variables
@@ -27,14 +27,14 @@ var _input_vector = Vector2.ZERO
 var _invulnerability_timer: float = 0.0
 
 # Onready variables
-@onready var _sprite = $Sprite2D
+@onready var _player_visual = $PlayerVisual
 @onready var _animation_player = $AnimationPlayer
 @onready var _collision_shape = $CollisionShape2D
 
 # Built-in virtual methods
 func _ready() -> void:
 	# Initialize the player
-	_sprite.modulate = Color(1, 1, 1, 1)
+	_player_visual.modulate = Color(1, 1, 1, 1)
 	health_changed.emit(health)
 
 func _physics_process(delta: float) -> void:
@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += _gravity * delta
 	
 	# Handle jump
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_up") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		_play_animation("jump")
 	
@@ -105,9 +105,9 @@ func _flip_sprite(direction: float) -> void:
 	Flip the sprite based on movement direction
 	"""
 	if direction < 0:
-		_sprite.flip_h = true
+		_player_visual.scale.x = -1
 	else:
-		_sprite.flip_h = false
+		_player_visual.scale.x = 1
 
 func _play_animation(anim_name: String) -> void:
 	"""
@@ -123,7 +123,7 @@ func _start_invulnerability(duration: float) -> void:
 	is_invulnerable = true
 	_invulnerability_timer = duration
 	# Visual feedback for invulnerability
-	_sprite.modulate = Color(1, 1, 1, 0.5)
+	_player_visual.modulate = Color(1, 1, 1, 0.5)
 
 func _end_invulnerability() -> void:
 	"""
@@ -131,7 +131,7 @@ func _end_invulnerability() -> void:
 	"""
 	is_invulnerable = false
 	_invulnerability_timer = 0.0
-	_sprite.modulate = Color(1, 1, 1, 1)
+	_player_visual.modulate = Color(1, 1, 1, 1)
 
 func _die() -> void:
 	"""
