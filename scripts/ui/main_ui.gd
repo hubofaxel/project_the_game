@@ -77,3 +77,10 @@ func _on_quit_button_pressed() -> void:
 	Handle quit button press
 	"""
 	quit_pressed.emit()
+
+func _on_resume_button_pressed() -> void:
+	"""
+	Handle resume button press on pause menu
+	"""
+	hide_pause_menu()
+	resume_pressed.emit()

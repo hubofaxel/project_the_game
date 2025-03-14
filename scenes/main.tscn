@@ -95,7 +95,7 @@ text = "Quit"
 [connection signal="quit_pressed" from="UI" to="." method="_on_pause_menu_quit"]
 [connection signal="restart_pressed" from="UI" to="." method="restart_game"]
 [connection signal="resume_pressed" from="UI" to="." method="_on_pause_menu_resume"]
-[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/ResumeButton" to="UI" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/VBoxContainer/ResumeButton" to="UI" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/VBoxContainer/QuitButton" to="UI" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="UI" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/QuitButton" to="UI" method="_on_quit_button_pressed"]

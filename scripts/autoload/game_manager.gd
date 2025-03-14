@@ -103,9 +103,14 @@ func _save_settings() -> void:
 	"""
 	Save settings to a file
 	"""
+	var error = OK
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	
 	if save_file:
 		save_file.store_string(JSON.stringify(settings))
+	else:
+		error = FileAccess.get_open_error()
+		push_error("Failed to save settings: " + str(error))
 
 func _load_settings() -> void:
 	"""
@@ -121,13 +126,24 @@ func _load_settings() -> void:
 			if parse_result == OK:
 				var loaded_settings = json.get_data()
 				
-				# Update settings with loaded values
-				for key in loaded_settings:
-					if settings.has(key):
-						settings[key] = loaded_settings[key]
-				
-				# Apply loaded settings
-				_apply_settings()
+				if typeof(loaded_settings) == TYPE_DICTIONARY:
+					# Update settings with loaded values
+					for key in loaded_settings:
+						if settings.has(key):
+							settings[key] = loaded_settings[key]
+					
+					# Apply loaded settings
+					_apply_settings()
+				else:
+					push_error("Settings file contains invalid data type")
+			else:
+				push_error("Failed to parse settings file: " + json.get_error_message() + " at line " + str(json.get_error_line()))
+		else:
+			var error = FileAccess.get_open_error()
+			push_error("Failed to open settings file: " + str(error))
+	else:
+		# No settings file exists yet, this is normal for first run
+		push_warning("No settings file found, using defaults")
 
 func _apply_settings() -> void:
 	"""

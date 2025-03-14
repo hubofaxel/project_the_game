@@ -22,8 +22,18 @@ var _current_track: String = ""
 var _music_volume: float
 var _sfx_volume: float
 var _music_fading: bool = false
+var _max_sfx_players: int = 16  # Maximum number of SFX players to keep
+var _cleanup_timer: float = 0.0
+var _cleanup_interval: float = 5.0  # Check for unused players every 5 seconds
 
 # Built-in virtual methods
+func _process(delta: float) -> void:
+	# Handle cleanup timer for SFX players
+	_cleanup_timer += delta
+	if _cleanup_timer >= _cleanup_interval:
+		_cleanup_timer = 0.0
+		_cleanup_unused_sfx_players()
+
 func _ready() -> void:
 	# Initialize audio system
 	_initialize_audio_buses()
@@ -220,6 +230,42 @@ func _create_sfx_player() -> AudioStreamPlayer:
 	player.bus = "SFX"
 	add_child(player)
 	return player
+
+func _cleanup_unused_sfx_players() -> void:
+	"""
+	Clean up unused SFX players to prevent memory leaks
+	"""
+	# If we have more than the minimum required players
+	if sfx_players.size() > 8:
+		var active_players = []
+		var inactive_players = []
+		
+		# Separate active and inactive players
+		for player in sfx_players:
+			if player.playing:
+				active_players.append(player)
+			else:
+				inactive_players.append(player)
+		
+		# Keep all active players
+		sfx_players = active_players
+		
+		# Add back some inactive players up to the minimum (8)
+		var inactive_to_keep = max(0, 8 - active_players.size())
+		for i in range(min(inactive_to_keep, inactive_players.size())):
+			sfx_players.append(inactive_players[i])
+		
+		# Remove the rest
+		for i in range(inactive_to_keep, inactive_players.size()):
+			inactive_players[i].queue_free()
+		
+		# Make sure we don't exceed the maximum
+		if sfx_players.size() > _max_sfx_players:
+			for i in range(_max_sfx_players, sfx_players.size()):
+				if i < sfx_players.size() and not sfx_players[i].playing:
+					sfx_players[i].queue_free()
+					sfx_players.remove_at(i)
+					i -= 1
 
 # Signal handlers
 func _on_settings_changed() -> void:

@@ -2,6 +2,10 @@
 # Handles all UI elements and interactions
 extends CanvasLayer
 
+# Signals
+signal resume_pressed
+signal quit_pressed
+
 # Exported variables
 @export var health_bar: ProgressBar
 @export var score_label: Label
@@ -94,7 +98,3 @@ func _on_resume_button_pressed() -> void:
 	hide_pause_menu()
 	# Emit signal to unpause the game
 	resume_pressed.emit()
-
-# Signals
-signal resume_pressed
-signal quit_pressed

@@ -119,12 +119,33 @@ func _complete_level() -> void:
 		
 		# Load next level if available
 		if next_level:
-			# Get reference to main scene and call load_level
-			var main = get_tree().get_root().get_node("Main")
+			# Find the main scene using a more robust method
+			var main = _find_main_scene()
 			if main and main.has_method("load_level"):
 				# Add a small delay before loading next level
 				await get_tree().create_timer(1.0).timeout
 				main.load_level(next_level)
+			else:
+				push_warning("Could not find main scene with load_level method")
+
+# Helper methods
+func _find_main_scene() -> Node:
+	"""
+	Find the main scene using a more robust method
+	"""
+	# Try to find a node named "Main" in the scene tree
+	var main = get_tree().get_root().get_node_or_null("Main")
+	
+	# If not found, try to find a node with the load_level method
+	if not main:
+		var root = get_tree().get_root()
+		for i in range(root.get_child_count()):
+			var node = root.get_child(i)
+			if node.has_method("load_level"):
+				main = node
+				break
+	
+	return main
 
 # Signal handlers
 func _on_collectible_collected(collectible) -> void:

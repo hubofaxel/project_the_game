@@ -25,6 +25,14 @@ var _game_paused: bool = false
 func _ready() -> void:
 	# Initialize the game
 	_pause_menu.visible = false
+	
+	# Connect UI signals
+	if _pause_menu.has_signal("resume_pressed"):
+		_pause_menu.resume_pressed.connect(_on_pause_menu_resume)
+	
+	if _pause_menu.has_signal("quit_pressed"):
+		_pause_menu.quit_pressed.connect(_on_pause_menu_quit)
+	
 	_load_initial_level()
 	_spawn_player()
 

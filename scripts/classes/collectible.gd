@@ -27,13 +27,25 @@ var _initial_modulate: Color
 
 # Built-in virtual methods
 func _ready() -> void:
+	# Check for required nodes
+	if not has_node("Sprite2D"):
+		push_warning("Collectible missing Sprite2D node")
+	
+	if not has_node("CollisionShape2D"):
+		push_error("Collectible missing CollisionShape2D node")
+	
 	# Store initial state
 	_initial_position = global_position
 	if _sprite:
 		_initial_modulate = _sprite.modulate
+	else:
+		_initial_modulate = Color(1, 1, 1, 1)  # Default white if no sprite
 	
 	# Connect signals
-	body_entered.connect(_on_body_entered)
+	if has_signal("body_entered"):
+		body_entered.connect(_on_body_entered)
+	else:
+		push_error("Collectible missing body_entered signal")
 	
 	# Make sure it's not collected at start
 	is_collected = false

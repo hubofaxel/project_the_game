@@ -4,5 +4,6 @@
     "editor.formatOnSave": true,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "godotTools.editorPath.godot4": "c:\\Users\\axelp\\Game Engines\\Godot_v4.4-stable_win64.exe\\Godot_v4.4-stable_win64.exe"
 }

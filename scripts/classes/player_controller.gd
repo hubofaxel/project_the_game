@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle horizontal movement
 	if _input_vector.x != 0:
-		velocity.x = lerp(velocity.x, _input_vector.x * SPEED, acceleration)
+		velocity.x = lerp(velocity.x, _input_vector.x * SPEED, acceleration * delta * 60.0)
 		_flip_sprite(_input_vector.x)
 		
 		if is_on_floor():
@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		# Apply friction
 		var friction_to_apply = friction if is_on_floor() else air_friction
-		velocity.x = lerp(velocity.x, 0.0, friction_to_apply)
+		velocity.x = lerp(velocity.x, 0.0, friction_to_apply * delta * 60.0)
 		
 		if is_on_floor():
 			_play_animation("idle")
