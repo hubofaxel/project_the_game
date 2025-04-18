@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqo8j5vxbh5yw"]
 
-[ext_resource type="Script" path="res://scripts/classes/player_controller.gd" id="1_8p4vj"]
+[ext_resource type="Script" uid="uid://b5x1wwpgsh0t" path="res://scripts/classes/player_controller.gd" id="1_8p4vj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6ywx"]
 size = Vector2(40, 72)
@@ -44,6 +44,70 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(0.5, 0.5, 1),
 "update": 0,
 "values": [0.0, 5.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerVisual:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.9, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerVisual/LeftArm:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [0.0, -30.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerVisual/RightArm:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [0.0, 30.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerVisual/LeftLeg:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [0.0, 20.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PlayerVisual/RightLeg:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [0.0, -20.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_run"]
@@ -111,75 +175,11 @@ tracks/4/keys = {
 "values": [0.0, 20.0, 0.0, -20.0, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerVisual:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.9, 1.1), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerVisual/LeftArm:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
-"update": 0,
-"values": [0.0, -30.0, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerVisual/RightArm:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
-"update": 0,
-"values": [0.0, 30.0, 0.0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerVisual/LeftLeg:rotation_degrees")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
-"update": 0,
-"values": [0.0, 20.0, 0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerVisual/RightLeg:rotation_degrees")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(0.5, 0.5, 1),
-"update": 0,
-"values": [0.0, -20.0, 0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_player"]
 _data = {
-"idle": SubResource("Animation_idle"),
-"jump": SubResource("Animation_jump"),
-"run": SubResource("Animation_run")
+&"idle": SubResource("Animation_idle"),
+&"jump": SubResource("Animation_jump"),
+&"run": SubResource("Animation_run")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -206,7 +206,6 @@ offset_left = -8.0
 offset_top = -52.0
 offset_right = 8.0
 offset_bottom = -44.0
-color = Color(1, 1, 1, 1)
 
 [node name="LeftPupil" type="ColorRect" parent="PlayerVisual"]
 offset_left = -6.0
@@ -256,6 +255,6 @@ shape = SubResource("RectangleShape2D_j6ywx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_player")
+&"": SubResource("AnimationLibrary_player")
 }
 autoplay = "idle"
